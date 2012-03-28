@@ -1,24 +1,56 @@
 
-use warnings FATAL => 'all';
 use strict;
-use inc::Module::Install 0.75;
+use warnings;
 
-name     'MooseX-Types-Path-Class';
-all_from 'lib/MooseX/Types/Path/Class.pm';
-license  'perl';
 
-# prereqs
-requires 'Class::MOP'     => 0;
-requires 'Moose'          => '0.39';
-requires 'MooseX::Types'  => '0.04';
-requires 'Path::Class'    => '0.16';
 
-# things the tests need
-build_requires 'Test::More' => '0.62';
+use ExtUtils::MakeMaker 6.30;
 
-#auto_provides;
 
-#auto_install;
 
-WriteAll;
+my %WriteMakefileArgs = (
+  "ABSTRACT" => "A Path::Class type library for Moose",
+  "AUTHOR" => "Todd Hepler <thepler\@employees.org>",
+  "BUILD_REQUIRES" => {
+    "Test::More" => "0.88"
+  },
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
+  },
+  "DISTNAME" => "MooseX-Types-Path-Class",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "MooseX::Types::Path::Class",
+  "PREREQ_PM" => {
+    "Class::MOP" => 0,
+    "Moose" => "0.39",
+    "MooseX::Types" => "0.04",
+    "Path::Class" => "0.16"
+  },
+  "VERSION" => "0.06",
+  "test" => {
+    "TESTS" => "t/*.t"
+  }
+);
+
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
+  my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
+  my $pp = $WriteMakefileArgs{PREREQ_PM};
+  for my $mod ( keys %$br ) {
+    if ( exists $pp->{$mod} ) {
+      $pp->{$mod} = $br->{$mod} if $br->{$mod} > $pp->{$mod};
+    }
+    else {
+      $pp->{$mod} = $br->{$mod};
+    }
+  }
+}
+
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
 

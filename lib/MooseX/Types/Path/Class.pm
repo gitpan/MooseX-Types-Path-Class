@@ -1,13 +1,12 @@
 package MooseX::Types::Path::Class;
+{
+  $MooseX::Types::Path::Class::VERSION = '0.06';
+}
 
 use warnings FATAL => 'all';
 use strict;
 
-our $VERSION = '0.05';
-our $AUTHORITY = 'cpan:THEPLER';
-
 use Path::Class ();
-# TODO: export dir() and file() from Path::Class? (maybe)
 
 use MooseX::Types
     -declare => [qw( Dir File )];
@@ -73,7 +72,7 @@ MooseX::Types::Path::Class - A Path::Class type library for Moose
   # appropriate Path::Class objects
   MyClass->new( dir => '/some/directory/', file => '/some/file' );
 
-  
+
 =head1 DESCRIPTION
 
 MooseX::Types::Path::Class creates common L<Moose> types,
@@ -130,6 +129,11 @@ or false if the coercion failed.
 =back
 
 
+=head1 SEE ALSO
+
+L<MooseX::Types::Path::Class::MoreCoercions>, L<MooseX::FileAttribute>, L<MooseX::Types::URI>
+
+
 =head1 DEPENDENCIES
 
 L<Moose>, L<MooseX::Types>, L<Path::Class>
@@ -148,7 +152,7 @@ Todd Hepler  C<< <thepler@employees.org> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007-2008, Todd Hepler C<< <thepler@employees.org> >>.
+Copyright (c) 2007-2012, Todd Hepler C<< <thepler@employees.org> >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
